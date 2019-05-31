@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
-from ViewController import ViewController
+from VistaControlador import VistaControlador
 from Grafico import Grafico
-class MainWindow:
-    def __init__(self,controller):
+class Gui:
+    def __init__(self,controlador):
         self.win =  tk.Tk()
         self.win.title("Invest & Grow")
         self.tabControl = ttk.Notebook(self.win) 
@@ -31,10 +31,10 @@ class MainWindow:
         self.btnGraficar.pack()
         self.grillaDatos()
 
-        self.viewController = controller
+        self.vistaControlador = controlador
         self.grafico =  Grafico()
-        self.grafico.graficar(self.viewController.cambios,self.tab1)
-        self.grafico.pandas_candlestick_ohlc(self.viewController.getStock("Microsoft"),self.viewController.fechas[2],self.tab2)
+        self.grafico.graficar(self.vistaControlador.cambios,self.tab1)
+        self.grafico.pandas_candlestick_ohlc(self.vistaControlador.getStock("Microsoft"),self.vistaControlador.fechas[2],self.tab2)
 
     def setResultados(self,trades):
         self.result.set(str(trades))
@@ -58,5 +58,5 @@ class MainWindow:
             self.tree.insert("", tk.END, values=fila)
             i += 1
     def graficar(self):
-        self.grafico.pandas_candlestick_ohlc(self.viewController.getStock(self.combo.get()),self.viewController.fechas[2],self.tab2)
+        self.grafico.pandas_candlestick_ohlc(self.vistaControlador.getStock(self.combo.get()),self.vistaControlador.fechas[2],self.tab2)
 

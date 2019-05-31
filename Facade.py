@@ -1,16 +1,16 @@
 from Grafico import Grafico
 from FuenteDatos import FuenteDatos
-from MainWindow import MainWindow
-from Estadisticas import Estadisticas
-from ViewController import ViewController
+from Gui import Gui
+from Analisis import Analisis
+from VistaControlador import VistaControlador
 class Facade:
     def __init__(self):
-        self.esta = Estadisticas()
+        self.analisis = Analisis()
         self.generarDatos = FuenteDatos()
-        self.viewController = ViewController(self.generarDatos)
-        self.mainWindow = MainWindow(self.viewController)
-    def iniciarGui(self):
-        signals = self.esta.ma_crossover_orders([("AAPL", self.generarDatos.apple),
+        self.vistaControlador = VistaControlador(self.generarDatos)
+        self.mainWindow = Gui(self.vistaControlador)
+    def iniciarBot(self):
+        signals = self.analisis.analisisMediasMoviles([("AAPL", self.generarDatos.apple),
                                     ("MSFT",  self.generarDatos.microsoft),
                                     ("GOOG",  self.generarDatos.google),
                                     ("FB",    self.generarDatos.facebook),
@@ -23,7 +23,7 @@ class Facade:
                                     ("IBM",   self.generarDatos.ibm),
                                     ("HPQ",   self.generarDatos.hp)],
                             fast = 20, slow = 50)
-        bk = self.esta.backtest(signals, 1000000)
+        bk = self.analisis.backtest(signals, 1000000)
 
         
         self.mainWindow.setDatosGrilla(bk)

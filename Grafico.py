@@ -14,7 +14,7 @@ from mpl_finance import candlestick_ohlc
 import pandas as pd
 from matplotlib.dates import date2num
 
-from Estadisticas import Estadisticas
+from Analisis import Analisis
 class Grafico():
     def __init__(self):
         self.grafico = False
@@ -161,7 +161,6 @@ class Grafico():
         #navigation tool
         if self.grafico:
             self.canvas.get_tk_widget().destroy()
-          
 
         if ~self.grafico:
             self.canvas = FigureCanvasTkAgg(fig, master=window)

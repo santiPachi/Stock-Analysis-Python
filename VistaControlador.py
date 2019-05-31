@@ -1,5 +1,5 @@
 from FuenteDatos import FuenteDatos
-class ViewController:
+class VistaControlador:
     def __init__(self,datos):
         self.datos = datos
         self.cambios = self.datos.getCambios()

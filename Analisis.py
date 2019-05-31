@@ -2,7 +2,7 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 import pandas as pd
 import math
-class Estadisticas:
+class Analisis:
    
     def cambiarValorPrecios(self,shares,valor):
         cambios = list()
@@ -38,23 +38,23 @@ class Estadisticas:
 
         return yvec
 
-    def ma_crossover_orders(self,stocks, fast, slow):
+    def analisisMediasMoviles(self,stocks, fast, slow):
         
-        fast_str = str(fast) + 'd'
-        slow_str = str(slow) + 'd'
-        ma_diff_str = fast_str + '-' + slow_str
+        oso = str(fast) + 'd'
+        toro = str(slow) + 'd'
+        diff = oso + '-' + toro
 
         trades = pd.DataFrame({"Price": [], "Regime": [], "Signal": []})
         for s in stocks:
             # Get the moving averages, both fast and slow, along with the difference in the moving averages
-            s[1][fast_str] = np.round(s[1]["Close"].rolling(window = fast, center = False).mean(), 2)
-            s[1][slow_str] = np.round(s[1]["Close"].rolling(window = slow, center = False).mean(), 2)
-            s[1][ma_diff_str] = s[1][fast_str] - s[1][slow_str]
+            s[1][oso] = np.round(s[1]["Close"].rolling(window = fast, center = False).mean(), 2)
+            s[1][toro] = np.round(s[1]["Close"].rolling(window = slow, center = False).mean(), 2)
+            s[1][diff] = s[1][oso] - s[1][toro]
 
             # np.where() is a vectorized if-else function, where a condition is checked for each component of a vector, and the first argument passed is used when the condition holds, and the other passed if it does not
-            s[1]["Regime"] = np.where(s[1][ma_diff_str] > 0, 1, 0)
+            s[1]["Regime"] = np.where(s[1][diff] > 0, 1, 0)
             # We have 1's for bullish regimes and 0's for everything else. Below I replace bearish regimes's values with -1, and to maintain the rest of the vector, the second argument is apple["Regime"]
-            s[1]["Regime"] = np.where(s[1][ma_diff_str] < 0, -1, s[1]["Regime"])
+            s[1]["Regime"] = np.where(s[1][diff] < 0, -1, s[1]["Regime"])
             # To ensure that all trades close out, I temporarily change the regime of the last row to 0
             regime_orig = s[1].loc[:, "Regime"].iloc[-1]
             s[1].loc[:, "Regime"].iloc[-1] = 0

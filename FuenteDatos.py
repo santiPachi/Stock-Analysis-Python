@@ -9,6 +9,7 @@ class FuenteDatos:
         start = datetime.datetime(2011,1,1)
         end = datetime.date.today()
        
+        quandl.ApiConfig.api_key = "bMXqpfyBPsHZduzATJxx"
         (self.microsoft, self.google, self.facebook, self.twitter, self.netflix,
         self.amazon, self.yahoo, self.ge, self.qualcomm, self.ibm, self.hp,self.apple)= (quandl.get("WIKI/" + s, start_date=start, end_date=end) for s in ["MSFT", "GOOG", "FB", "TWTR","NFLX", "AMZN", "YHOO", "GE","QCOM", "IBM", "HPQ","AAPL"])
  
