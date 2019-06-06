@@ -9,8 +9,9 @@ class Facade:
         self.generarDatos = FuenteDatos()
         self.vistaControlador = VistaControlador(self.generarDatos)
         self.mainWindow = Gui(self.vistaControlador)
+
     def iniciarBot(self):
-        signals = self.analisis.analisisMediasMoviles([("AAPL", self.generarDatos.apple),
+        seniales = self.analisis.analisisMediasMoviles([("AAPL", self.generarDatos.apple),
                                     ("MSFT",  self.generarDatos.microsoft),
                                     ("GOOG",  self.generarDatos.google),
                                     ("FB",    self.generarDatos.facebook),
@@ -23,11 +24,12 @@ class Facade:
                                     ("IBM",   self.generarDatos.ibm),
                                     ("HPQ",   self.generarDatos.hp)],
                             fast = 20, slow = 50)
-        bk = self.analisis.backtest(signals, 1000000)
+
+        bk = self.analisis.backtest(seniales, 1000000)
 
         
         self.mainWindow.setDatosGrilla(bk)
-        self.mainWindow.setGraficaResultados(bk)
+        self.mainWindow.setGraficaPortafolio(bk)
       
         #self.mainWindow.setResultados(bk)
         self.mainWindow.iniciar()

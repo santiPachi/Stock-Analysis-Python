@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from VistaControlador import VistaControlador
 from Grafico import Grafico
+
 class Gui:
     def __init__(self,controlador):
         self.win =  tk.Tk()
@@ -12,14 +13,12 @@ class Gui:
         self.tab2 = ttk.Frame(self.tabControl)            
         self.tabControl.add(self.tab2, text='Stocks')      
         self.tab3 = ttk.Frame(self.tabControl)            
-        self.tabControl.add(self.tab3, text='Portafolio')      
+        self.tabControl.add(self.tab3, text='Transacciones')      
         self.tab4 = ttk.Frame(self.tabControl)            
-        self.tabControl.add(self.tab4, text='Totales')     
+        self.tabControl.add(self.tab4, text='Portafolio')     
         self.tabControl.pack(expand=1, fill="both")  
 
-        self.result = tk.StringVar()
-        self.text = tk.Label(self.tab3,text = "",textvariable=self.result)
-        self.text.pack()
+    
 
         #comboBox
         self.combo = ttk.Combobox(self.tab2, state="readonly")
@@ -36,11 +35,10 @@ class Gui:
         self.grafico.graficar(self.vistaControlador.cambios,self.tab1)
         self.grafico.pandas_candlestick_ohlc(self.vistaControlador.getStock("Microsoft"),self.vistaControlador.fechas[2],self.tab2)
 
-    def setResultados(self,trades):
-        self.result.set(str(trades))
+
     def iniciar(self):
         self.win.mainloop()
-    def setGraficaResultados(self,datos):
+    def setGraficaPortafolio(self,datos):
         self.grafico.graficarResultados(self.tab4,datos)
 
     def grillaDatos(self):
